@@ -1,45 +1,20 @@
 module alu_control (
     input  wire [1:0]  alu_op,
-    input  wire [2:0]  funct3,  // bits [14:12]
+    input  wire [2:0]  funct3,
     input  wire        funct7b5, // bit [30] in R-type
-    output reg  [3:0]  alu_ctrl  // 4-bit control to ALU
+    output wire [3:0]  alu_ctrl  // 4-bit control to ALU
 );
-    // We'll define these localparams for clarity
-    localparam AND_CTRL = 4'b0000;
-    localparam OR_CTRL  = 4'b0001;
-    localparam ADD_CTRL = 4'b0010;
-    localparam SUB_CTRL = 4'b0110;
+    wire op0, op1, f3_0, f3_1, f3_2, f7_5;
+    assign op0 = alu_op[0];
+    assign op1 = alu_op[1];
+    assign f3_0 = funct3[0];
+    assign f3_1 = funct3[1];
+    assign f3_2 = funct3[2];
+    assign f7_5 = funct7b5;
 
-    always @(*) begin
-        case (alu_op)
-            2'b00: begin
-                // Typically for loads/stores => add
-                alu_ctrl = ADD_CTRL;
-            end
-            2'b01: begin
-                // Typically for branch => subtract
-                alu_ctrl = SUB_CTRL;
-            end
-            2'b10: begin
-                // R-type => decode funct3/funct7
-                case (funct3)
-                    3'b000: begin
-                        // ADD or SUB depends on funct7 bit [30]
-                        if (funct7b5 == 1'b1) 
-                            alu_ctrl = SUB_CTRL; // SUB
-                        else
-                            alu_ctrl = ADD_CTRL; // ADD
-                    end
-                    3'b111: alu_ctrl = AND_CTRL; // AND
-                    3'b110: alu_ctrl = OR_CTRL;  // OR
-                    // Add more R-type instructions as needed (e.g. SLT, XOR, etc.)
-                    default: alu_ctrl = ADD_CTRL; 
-                endcase
-            end
-            default: begin
-                // For other cases, default to add
-                alu_ctrl = ADD_CTRL;
-            end
-        endcase
-    end
+    assign alu_ctrl[3] = 0;
+    assign alu_ctrl[2] = (op0 & ~op1) | (op1 & (~op0) & f7_5); 
+    assign alu_ctrl[1] = (~op1) | op0 | f7_5 | (~f3_2) | (~f3_1) ;
+    assign alu_ctrl[0] = op1 & (~f7_5) & f3_2 & f3_1 & (~f3_0);
+
 endmodule
