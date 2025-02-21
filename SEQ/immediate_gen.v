@@ -4,8 +4,7 @@ module immediate_gen (
 );
     wire [11:0] i_imm = instruction[31:20];
     wire [11:0] s_imm = {instruction[31:25], instruction[11:7]};
-    wire [12:0] b_imm = {instruction[31], instruction[7], 
-                         instruction[30:25], instruction[11:8], 1'b0};
+    wire [12:0] b_imm = {instruction[31], instruction[7], instruction[30:25], instruction[11:8], 1'b0}; 
     
     // Sign extension
     always @(*) begin
