@@ -11,14 +11,14 @@ module register_file (
 );
     reg [63:0] registers [0:31];  // 32 64-bit registers
 
-    genvar i;
-    generate
-        for (i = 0; i < 32; i = i + 1) begin : init_loop
-            initial begin
-                registers[i] = 64'h0000000000000000;
-            end
-        end
-    endgenerate
+    // genvar i;
+    // generate
+    //     for (i = 0; i < 32; i = i + 1) begin : init_loop
+    //         initial begin
+    //             registers[i] = 64'h0000000000000000;
+    //         end
+    //     end
+    // endgenerate
     
 
     // Read operation
