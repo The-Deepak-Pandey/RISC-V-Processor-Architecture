@@ -1,10 +1,20 @@
 module write_back(
     input mem_read,
-    input [4:0] rd_addr,
-    input [63:0] mem_data,
-    output reg [63:0] write_data,
+    input wire [63:0] read_data,
+    input wire [63:0] alu_result,
+    output wire [63:0] write_back_data
 );
 
-    
+    // Write back data mux
+    assign write_back_data = (mem_read) ? read_data : alu_result;
+
+    // For debuging
+    always @(*) begin
+        if (mem_read) begin
+            $display("Write Back: Read Data from memory = %0d", read_data);
+        end else begin
+            $display("Write Back: ALU Result = %0d", alu_result);
+        end
+    end
 
 endmodule
