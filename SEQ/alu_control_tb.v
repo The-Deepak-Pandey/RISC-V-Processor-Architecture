@@ -1,4 +1,5 @@
 `timescale 1ns / 1ps
+`include "alu_control.v"
 
 module alu_control_tb;
     // Inputs
@@ -19,14 +20,14 @@ module alu_control_tb;
 
     // Test procedure
     initial begin
-        $monitor("ALUOp = %b, Funct3 = %b, Funct7b5 = %b --> ALU Ctrl = %b", alu_op, funct3, funct7b5, alu_ctrl);
+        $monitor("ALUOp = %b,  Funct7b5 = %b, Funct3 = %b --> ALU Ctrl = %b", alu_op,  funct7b5,funct3, alu_ctrl);
 
         // Test cases based on the modified table
         alu_op = 2'b00; funct3 = 3'bXXX; funct7b5 = 1'bX; #10; // 0010
         alu_op = 2'b01; funct3 = 3'bXXX; funct7b5 = 1'bX; #10; // 0110
         alu_op = 2'b10; funct3 = 3'b000; funct7b5 = 1'b0; #10; // 0010
         alu_op = 2'b10; funct3 = 3'b000; funct7b5 = 1'b1; #10; // 0110
-        alu_op = 2'b10; funct3 = 3'b000; funct7b5 = 1'b0; #10; // 0000
+        alu_op = 2'b10; funct3 = 3'b111; funct7b5 = 1'b0; #10; // 0000
         alu_op = 2'b10; funct3 = 3'b110; funct7b5 = 1'b0; #10; // 0001
         
         $finish;
