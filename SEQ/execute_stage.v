@@ -2,17 +2,15 @@
 `include "alu.v"
 
 module execute_stage (
-    input wire clk,
-    input wire rst,
-    input [1:0] alu_op,
-    input [3:0] alu_ctrl,
+    input wire [1:0] alu_op,
     input wire alu_src,
-    input [63:0] rd1,
-    input [63:0] rd2,
-    input [63:0] imm,
+    input wire [63:0] rd1,
+    input wire [63:0] rd2,
+    input wire [63:0] imm,
     input wire [2:0] funct3,
     input wire funct7b5, // bit [30] in R-type
     output wire [63:0] alu_result,
+    output wire [3:0] alu_ctrl,
     output wire alu_zero
 );
 

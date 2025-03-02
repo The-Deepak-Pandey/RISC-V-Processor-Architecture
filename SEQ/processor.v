@@ -1,6 +1,6 @@
 `include "instruction_fetch_stage.v"
 `include "instruction_decode_stage.v"
-`include "excecute_stage.v"
+`include "execute_stage.v"
 `include "memory_access_stage.v"
 `include "write_back_stage.v"
 
@@ -9,22 +9,25 @@ module processor (
     input wire rst            // Reset signal
 );
 
-    wire [31:0] instruction; // Fetched Instruction
-    wire [63:0] rs1_data; // Data from source register 1
-    wire [63:0] rs2_data; // Data from source register 2
-    wire [63:0] immediate; // Immediate value
-    wire branch;          // Branch control signal
-    wire mem_read;        // Memory read control signal
-    wire mem_to_reg;      // Memory to register control signal
-    wire [1:0] alu_op;    // ALU operation control signal
-    wire mem_write;      // Memory write control signal
-    wire alu_src;       // ALU source control signal
-    wire reg_write ;       // Register write control signal
+    wire [31:0] pc;              // Program Counter
+    wire [31:0] instruction;     // Fetched Instruction
+    wire [63:0] rs1_data;        // Data from source register 1
+    wire [63:0] rs2_data;        // Data from source register 2
+    wire [63:0] immediate;       // Immediate value
+    wire branch;                 // Branch control signal
+    wire mem_read;               // Memory read control signal
+    wire mem_to_reg;             // Memory to register control signal
+    wire [1:0] alu_op;           // ALU operation control signal
+    wire mem_write;              // Memory write control signal
+    wire alu_src;                // ALU source control signal
+    wire reg_write;              // Register write control signal
+    wire [63:0] alu_result;      // ALU result
+    wire zero;                   // Zero flag from ALU
+    wire [63:0] mem_data;        // Data read from memory
+    wire [63:0] write_data;      // Data to write back to register file
+    wire [3:0] alu_ctrl;         // ALU control signal
 
-    wire [63:0] alu_result;
-    wire zero;
-    wire [63:0] mem_data;
-    wire [63:0] write_data;
+
 
     // PC update logic
 
@@ -57,10 +60,16 @@ module processor (
 
     // Execute Stage
     execute_stage ex_stage (
-        .clk(clk),
-        .rst(rst),
-        .aluop(alu_op),
-        .alu_
+        .alu_op(alu_op),
+        .alu_ctrl(alu_ctrl),
+        .alu_src(alu_src),
+        .rd1(rs1_data),
+        .rd2(rs2_data),
+        .imm(immediate),
+        .funct3(instruction[14:12]),
+        .funct7b5(instruction[30]),
+        .alu_result(alu_result),
+        .alu_zero(zero)
     );
 
     // Memory Access Stage
@@ -69,16 +78,16 @@ module processor (
         .mem_read(mem_read),
         .mem_write(mem_write),
         .alu_result(alu_result),
-        .rs2_data(rs2_data),
+        .write_data(write_data),
         .mem_data(mem_data)
     );
 
     // Write Back Stage
-    write_back_stage wb_stage (
-        .mem_to_reg(mem_to_reg),
-        .mem_data(mem_data),
+    write_back wb_stage (
+        .mem_read(mem_read),
+        .read_data(mem_data),
         .alu_result(alu_result),
-        .write_data(write_data)
+        .write_back_data(write_data)
     );
 
 endmodule
