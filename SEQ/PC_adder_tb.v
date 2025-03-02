@@ -1,4 +1,5 @@
 `timescale 1ns / 1ps
+`include "PC_adder.v"
 
 module PC_adder_tb;
     // Inputs
@@ -34,6 +35,10 @@ module PC_adder_tb;
         branch = 0;
         imm_gen_out = 0;
         pc_in = 32'h00000000;
+
+        // Monitor changes
+        $monitor("Time: %0t | pc_in: %h | pc_out: %h | branch: %b | ALU_zero: %b | imm_gen_out: %h", 
+                 $time, pc_in, pc_out, branch, ALU_zero, imm_gen_out);
 
         #10 reset = 0;  // Release reset
 
