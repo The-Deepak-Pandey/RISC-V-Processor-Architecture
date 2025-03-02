@@ -22,8 +22,8 @@ module instruction_memory(
     end
 
     always @(*) begin
-        instruction = instr_mem[pc[8:2]]; // Read instruction from memory
-        $display("Instruction Fetch: PC = %d, Instruction = %b", pc, instruction);
+        instruction = instr_mem[pc>>2]; // Read instruction from memory
+        $display("Instruction Fetch: PC = %d, Instruction = %h", pc, instruction);
     end
 
 endmodule

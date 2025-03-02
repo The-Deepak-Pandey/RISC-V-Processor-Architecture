@@ -29,7 +29,7 @@ module register_file (
         // Debug output for register initialization
         $display("Register Initialization testing:");
         for (i = 0; i < 32; i = i + 1) begin
-            $display("Register %0d: %h", i, registers[i]);
+            $display("Register %0d: %b", i, registers[i]);
         end
     end
 
@@ -50,12 +50,9 @@ module register_file (
         rs2_data = (rs2_addr == 5'b00000) ? 64'h0 : registers[rs2_addr];
     end
     
-    
     // Write operation
     always @(posedge clk) begin
         if (rst) begin
-            genvar i;
-            generate
                 for (i = 0; i < 32; i = i + 1) begin : reset_loop
                     registers[i] <= 64'h0000000000000000;
                 end
@@ -68,7 +65,7 @@ module register_file (
                 registers[5] <= 64'd5;
                 registers[6] <= 64'd6;
                 registers[7] <= 64'd7;
-            endgenerate
+            
         end 
         else if (reg_write && rd_addr != 5'b00000) begin
             registers[rd_addr] <= rd_data;
