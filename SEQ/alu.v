@@ -10,7 +10,7 @@ module alu (
     localparam ADD_CTRL = 4'b0010;
     localparam SUB_CTRL = 4'b0110;
     // You can add more as needed: XOR, SLT, etc.
-
+    
     always @(*) begin
         case (alu_ctrl)
             AND_CTRL: and(alu_result, in1, in2);
