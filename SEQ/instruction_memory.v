@@ -1,26 +1,21 @@
-module data_memory (
-    input logic clk,          // Clock signal
-    input logic mem_write,    // Control signal: 1 = Write, 0 = Read
-    input logic mem_read,     // Control signal: 1 = Read
-    input logic [63:0] addr,  // Memory address
-    input logic [63:0] write_data, // Data to write
-    output logic [63:0] read_data  // Data read from memory
+module instruction_fetch(
+    input wire clk,               // Clock Signal
+    input wire rst,               // Reset Signal
+    input wire [31:0] pc,         // Program Counter (PC)
+    output reg [31:0] instruction // Output: Fetched Instruction
 );
 
-    // 64-bit wide, 1024 locations (adjust size as needed)
-    logic [63:0] memory [0:1023];  
+    reg [31:0] instr_mem [0:255]; // Instruction Memory (256 words)
 
-    always_ff @(posedge clk) begin
-        if (mem_write) begin
-            memory[addr >> 3] <= write_data; // Store word-aligned
-        end
+    initial begin
+        $readmemb("instructions.txt", instr_mem); // Read instructions from file
     end
 
-    always_comb begin
-        if (mem_read)
-            read_data = memory[addr >> 3]; // Load word-aligned
+    always @(posedge clk or posedge rst) begin
+        if (rst)
+            instruction <= 32'b0; // Reset instruction
         else
-            read_data = 64'b0;
+            instruction <= instr_mem[pc>>2]; // Fetch instruction
     end
 
-// endmodule
+endmodule
