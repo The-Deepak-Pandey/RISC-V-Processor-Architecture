@@ -15,7 +15,7 @@ module instruction_fetch(
         if (rst)
             instruction <= 32'b0; // Reset instruction
         else
-            instruction <= instr_mem[pc >> 2]; // Fetch instruction
+            instruction <= instr_mem[pc>>2]; // Fetch instruction
     end
 
 endmodule
