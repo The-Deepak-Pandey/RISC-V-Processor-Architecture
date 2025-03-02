@@ -1,21 +1,39 @@
-module PC_adder (
-    input clk, reset,           // Clock and reset signals
-    input ALU_zero,             // Zero flag from ALU
-    input [63:0] imm_gen_out,   // Immediate generator output
-    input branch,               // Branch control signal
-    input [31:0] pc_in,         // Current PC value
-    output reg [31:0] pc_out        // Updated PC value
-);
+    module PC_adder (
+        input clk, reset,           // Clock and reset signals
+        input ALU_zero,             // Zero flag from ALU
+        input [63:0] branch_offset,   // Immediate generator output
+        input branch,               // Branch control signal
+        output reg [31:0] pc_out        // Updated PC value
+    );
 
-    always@(posedge clk or posedge reset) begin
-        if (reset)
-            pc_out <= 32'b0;  // Reset PC to 0
-        else begin
-            if (branch && ALU_zero)
-                pc_out <= pc_in + (imm_gen_out[31:0] << 1);  // Branch target calculation
-            else
-                pc_out <= pc_in + 4;  // Default PC increment
+        // max pc limit  = 128 inst * 4 bytes
+        localparam pc_limit = 64'h0000000000000200;
+
+        initial begin
+            pc_out = 64'h0;
+            $display("pc initialize to 0x%h", pc_out);
         end
-    end
 
-endmodule
+        always@(posedge clk or posedge reset) begin
+            if (reset) begin
+                pc_out <= 32'b0;  // Reset PC to 0
+                $display("pc reset to 0x%h", pc_out);
+            end 
+            // in case of branching
+            else if (branch & ALU_zero) begin
+                pc_out <= pc_out + (branch_offset << 1);
+                $display("pc branched to 0x%h", pc_out);
+            end 
+            // normal case
+            else if (pc_out < pc_limit-4) begin
+                pc_out <= pc_out + 4;
+                $display("pc incremented to 0x%h", pc_out);
+            end 
+            // limit reached case
+            else begin
+                $display("PROGRAM COMPLETED!!! : PC reached maximum value");
+                $finish;
+            end
+        end
+
+    endmodule
