@@ -12,7 +12,7 @@ module PC_adder (
             pc_out <= 32'b0;  // Reset PC to 0
         else begin
             if (branch && ALU_zero)
-                pc_out <= pc_in + (imm_gen_out << 1);  // Branch target calculation
+                pc_out <= pc_in + (imm_gen_out[31:0] << 1);  // Branch target calculation
             else
                 pc_out <= pc_in + 4;  // Default PC increment
         end

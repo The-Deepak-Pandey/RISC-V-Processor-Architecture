@@ -36,14 +36,11 @@ module PC_adder_tb;
         imm_gen_out = 0;
         pc_in = 32'h00000000;
 
-        // Monitor changes
-        $monitor("Time: %0t | pc_in: %h | pc_out: %h | branch: %b | ALU_zero: %b | imm_gen_out: %h", 
-                 $time, pc_in, pc_out, branch, ALU_zero, imm_gen_out);
-
-        #10 reset = 0;  // Release reset
+        // Release reset
+        #10 reset = 0;
 
         // Test 1: Normal PC increment
-        #10 pc_in = 32'h00000004; branch = 0; ALU_zero = 0;
+        #10 branch = 0; ALU_zero = 0;
         
         // Test 2: Branch taken (ALU_zero = 1, branch = 1, imm_gen_out = 8)
         #10 branch = 1; ALU_zero = 1; imm_gen_out = 64'h8;
@@ -52,12 +49,36 @@ module PC_adder_tb;
         #10 branch = 1; ALU_zero = 0; imm_gen_out = 64'h10;
 
         // Test 4: Another PC increment (without branching)
-        #10 branch = 0; ALU_zero = 0; pc_in = 32'h00000010;
+        #10 branch = 0; ALU_zero = 0;
 
-        // Test 5: Reset
+        // Additional Test 5: Branch taken with different immediate value
+        #10 branch = 1; ALU_zero = 1; imm_gen_out = 64'h20;
+
+        // Additional Test 6: Branch not taken with different immediate value
+        #10 branch = 1; ALU_zero = 0; imm_gen_out = 64'h40;
+
+        // Additional Test 7: Normal PC increment with different initial PC
+        #10 pc_in = 32'h00000010; branch = 0; ALU_zero = 0;
+
+        // Test 8: Reset
         #10 reset = 1;
-        #10 reset = 0;
+        #10 reset = 0; pc_in = 32'h00000000;
+
+        // Additional cycles to observe behavior
+        #10 branch = 0; ALU_zero = 0;
+        #10 branch = 0; ALU_zero = 0;
 
         #20 $finish;
+    end
+
+    // Monitor changes at each clock cycle
+    always @(posedge clk) begin
+        if (!reset) begin
+            $display("Time: %0t | pc_in: %d | pc_out: %d | branch: %d | ALU_zero: %d | imm_gen_out: %d", 
+                     $time, pc_in, pc_out, branch, ALU_zero, imm_gen_out);
+        end
+    end
+    always @(pc_out) begin
+            pc_in <= pc_out;
     end
 endmodule
