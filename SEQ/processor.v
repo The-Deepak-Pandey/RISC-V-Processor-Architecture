@@ -26,13 +26,18 @@ module processor (
     wire [63:0] mem_data;        // Data read from memory
     wire [63:0] write_data;      // Data to write back to register file
     wire [3:0] alu_ctrl;         // ALU control signal
-
+    
 
 
     // PC update logic
 
     // Instruction Fetch Stage
-    instruction_memory imem (
+    instruction_fetch_stage if_stage (
+        .clk(clk),
+        .rst(rst),
+        .ALU_zero(zero),
+        .branch(branch),
+        .branch_offset(immediate),
         .pc(pc),
         .instruction(instruction)
     );

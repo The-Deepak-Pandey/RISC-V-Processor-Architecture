@@ -29,7 +29,7 @@ module register_file (
         // Debug output for register initialization
         $display("Register Initialization testing:");
         for (i = 0; i < 32; i = i + 1) begin
-            $display("Register %0d: %b", i, registers[i]);
+            $display("Register %0d: %d", i, registers[i]);
         end
     end
 
