@@ -1,8 +1,8 @@
     module PC_adder (
-        input clk, reset,           // Clock and reset signals
-        input ALU_zero,             // Zero flag from ALU
-        input [63:0] branch_offset,   // Immediate generator output
-        input branch,               // Branch control signal
+        input wire clk, rst,           // Clock and rst signals
+        input wire ALU_zero,             // Zero flag from ALU
+        input wire [63:0] branch_offset,   // Immediate generator output
+        input wire branch,               // Branch control signal
         output reg [31:0] pc_out        // Updated PC value
     );
 
@@ -14,10 +14,10 @@
             $display("pc initialize to 0x%h", pc_out);
         end
 
-        always@(posedge clk or posedge reset) begin
-            if (reset) begin
-                pc_out <= 32'b0;  // Reset PC to 0
-                $display("pc reset to 0x%h", pc_out);
+        always@(posedge clk or posedge rst) begin
+            if (rst) begin
+                pc_out <= 32'b0;  // rst PC to 0
+                $display("pc rst to 0x%h", pc_out);
             end 
             // in case of branching
             else if (branch & ALU_zero) begin

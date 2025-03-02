@@ -1,4 +1,4 @@
-module instruction_fetch(
+module instruction_memory(
     input wire [31:0] pc,         // Program Counter (PC)
     output reg [31:0] instruction // Output: Fetched Instruction
 );
@@ -9,7 +9,7 @@ module instruction_fetch(
     initial begin
 
         for(i = 0; i<128; i = i+1) begin
-          instr_mem[i] = 32'h00000013; // no operation
+          instr_mem[i] = 32'b1101; // no operation
         end
 
         $readmemb("instructions.txt", instr_mem); // Read instructions from file
@@ -22,7 +22,7 @@ module instruction_fetch(
     end
 
     always @(*) begin
-        instruction = instr_mem[pc[8:2]]; // Read instruction from memory
+        instruction = instr_mem[pc>>2]; // Read instruction from memory
         $display("Instruction Fetch: PC = %d, Instruction = %h", pc, instruction);
     end
 
