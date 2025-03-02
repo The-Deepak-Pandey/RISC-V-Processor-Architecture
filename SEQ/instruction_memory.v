@@ -1,4 +1,4 @@
-module instruction_fetch(
+module instruction_memory(
     input wire [31:0] pc,         // Program Counter (PC)
     output reg [31:0] instruction // Output: Fetched Instruction
 );
