@@ -9,7 +9,7 @@ module instruction_memory(
     initial begin
 
         for(i = 0; i<128; i = i+1) begin
-          instr_mem[i] = 32'h00000013; // no operation
+          instr_mem[i] = 32'b1101; // no operation
         end
 
         $readmemb("instructions.txt", instr_mem); // Read instructions from file
@@ -23,7 +23,7 @@ module instruction_memory(
 
     always @(*) begin
         instruction = instr_mem[pc[8:2]]; // Read instruction from memory
-        $display("Instruction Fetch: PC = %d, Instruction = %h", pc, instruction);
+        $display("Instruction Fetch: PC = %d, Instruction = %b", pc, instruction);
     end
 
 endmodule
