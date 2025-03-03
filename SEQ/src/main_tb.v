@@ -24,10 +24,4 @@ module main_tb;
     // Clock generation
     always #5 clk = ~clk;  // 10ns clock period
 
-    
-
-    // Test procedure
-
-
-
 endmodule
