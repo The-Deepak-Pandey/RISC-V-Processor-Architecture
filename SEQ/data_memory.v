@@ -33,7 +33,7 @@ module data_memory (
 
     always @(*) begin
         if(mem_read) begin
-            read_data <= memory[address[10:3]]; // Read 64-bit data from memory (10:3 since memory is word accessible)
+            read_data <= memory[address>>3]; // Read 64-bit data from memory (10:3 since memory is word accessible)
             $display("Data Memory Read: Address = 0x%h, Data = %0d", address, read_data);
         end else begin
             read_data = 64'b0;

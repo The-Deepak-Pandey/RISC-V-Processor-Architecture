@@ -95,4 +95,32 @@ module processor (
         .write_back_data(write_data)
     );
 
+    // Display register file array
+    integer i;
+    always @(posedge clk or posedge rst) begin
+        if (rst) begin
+
+        end else begin
+            // Display register file contents
+            $display("Register File Contents: for instruction number = %0d", pc/4 + 1);
+            for (i = 0; i < 10; i = i + 1) begin
+                $display("x%0d: %d", i, id_stage.rf.registers[i]);
+            end
+        end
+    end
+
+    // Display memory file array
+    integer j;
+    always @(posedge clk or posedge rst) begin
+        if (rst) begin
+
+        end else begin
+            // Display memory file contents
+            $display("Memory File Contents: for instruction number = %0d", pc/4 + 1);
+            for (j = 0; j < 5; j = j + 1) begin
+                $display("memory[%0d]: %d", j, mem_stage.dmem.memory[j]);
+            end
+        end
+    end
+
 endmodule

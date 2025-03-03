@@ -19,7 +19,7 @@ module register_file (
 
         // test values initialization
         registers[1] = 64'd1;
-        registers[2] = 64'd69;
+        registers[2] = 64'd13;
         registers[3] = 64'd3;
         registers[4] = 64'd4;
         registers[5] = 64'd5;
@@ -59,7 +59,7 @@ module register_file (
 
                 // test values initialization
                 registers[1] <= 64'd1;
-                registers[2] <= 64'd69;
+                registers[2] <= 64'd13;
                 registers[3] <= 64'd3;
                 registers[4] <= 64'd4;
                 registers[5] <= 64'd5;
