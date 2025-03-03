@@ -1,5 +1,5 @@
-`include "PC_adder.v"
-`include "instruction_memory.v"
+`include "modules/components/PC_adder.v"
+`include "modules/components/instruction_memory.v"
 
 module instruction_fetch_stage(
     input wire clk, 

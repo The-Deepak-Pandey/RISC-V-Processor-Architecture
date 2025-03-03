@@ -1,6 +1,6 @@
-`include "control.v"
-`include "register_file.v"
-`include "immediate_gen.v"
+`include "modules/components/control.v"
+`include "modules/components/register_file.v"
+`include "modules/components/immediate_gen.v"
 
 module instruction_decode_stage(
     input wire clk,

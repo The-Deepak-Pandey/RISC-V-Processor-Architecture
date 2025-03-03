@@ -1,5 +1,5 @@
-`include "alu_control.v"
-`include "alu.v"
+`include "modules/components/alu_control.v"
+`include "modules/components/alu.v"
 
 module execute_stage (
     input wire [1:0] alu_op,
