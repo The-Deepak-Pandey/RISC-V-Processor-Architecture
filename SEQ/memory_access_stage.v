@@ -22,9 +22,9 @@ module memory_access_stage(
 
     always @(posedge clk) begin
         if(mem_write)
-            $display("memory access:store %h to address %h", write_data, alu_result);
+            $display("memory access:store %d to address %h", write_data, alu_result);
         if(mem_read)
-            $display("memory access:load %h from address %h", mem_data, alu_result);
+            $display("memory access:load %d from address %h", mem_data, alu_result);
     end
 
 

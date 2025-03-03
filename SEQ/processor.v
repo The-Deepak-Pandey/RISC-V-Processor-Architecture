@@ -83,7 +83,7 @@ module processor (
         .mem_read(mem_read),
         .mem_write(mem_write),
         .alu_result(alu_result),
-        .write_data(write_data),
+        .write_data(rs2_data),
         .mem_data(mem_data)
     );
 

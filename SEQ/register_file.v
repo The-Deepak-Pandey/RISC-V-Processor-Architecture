@@ -19,7 +19,7 @@ module register_file (
 
         // test values initialization
         registers[1] = 64'd1;
-        registers[2] = 64'd2;
+        registers[2] = 64'd69;
         registers[3] = 64'd3;
         registers[4] = 64'd4;
         registers[5] = 64'd5;
@@ -70,7 +70,7 @@ module register_file (
         else if (reg_write && rd_addr != 5'b00000) begin
             registers[rd_addr] <= rd_data;
             // Debug output for register writes
-            $display("Register Write: x%0d (rd addr) = %h (rd data)", rd_addr, rd_data);
+            $display("Register Write happening: x%0d (rd addr) = %d (rd data)", rd_addr, rd_data);
         end
     end
 endmodule

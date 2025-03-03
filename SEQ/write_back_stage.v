@@ -1,5 +1,5 @@
 module write_back(
-    input mem_read,
+    input wire mem_read,
     input wire [63:0] read_data,
     input wire [63:0] alu_result,
     output wire [63:0] write_back_data
@@ -11,9 +11,9 @@ module write_back(
     // For debuging
     always @(*) begin
         if (mem_read) begin
-            $display("Write Back: Read Data from memory = %0d", read_data);
+            $display("Write Back (ld operations): Read Data from memory = %0d", read_data);
         end else begin
-            $display("Write Back: ALU Result = %0d", alu_result);
+            $display("Write Back (alu operations): ALU Result = %0d", alu_result);
         end
     end
 
