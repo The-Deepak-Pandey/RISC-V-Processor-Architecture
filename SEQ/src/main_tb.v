@@ -1,6 +1,6 @@
-`include "processor.v"
+`include "main.v"
 
-module processor_tb;
+module main_tb;
     reg clk, rst;
 
     initial begin
@@ -10,6 +10,9 @@ module processor_tb;
 
         // Release reset
         #10 rst = 0;
+
+        $dumpfile("main_tb.vcd");
+        $dumpvars(0, main_tb);
     end
 
     // Instantiate the processor module
