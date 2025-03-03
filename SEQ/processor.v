@@ -6,7 +6,7 @@
 
 module processor (
     input wire clk,              // Clock signal
-    input wire rst            // Reset signal
+    input wire rst               // Reset signal
 );
 
     wire [31:0] pc;              // Program Counter
