@@ -12,7 +12,7 @@ module instruction_memory(
           instr_mem[i] = 32'b1101; // no operation
         end
 
-        $readmemb("instructions.txt", instr_mem); // Read instructions from file
+        $readmemb("../../instructions.txt", instr_mem); // Read instructions from file
 
         // // Debug output for instruction memory
         // $display("Instruction Memory contents:");

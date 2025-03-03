@@ -1,8 +1,8 @@
-`include "instruction_fetch_stage.v"
-`include "instruction_decode_stage.v"
-`include "execute_stage.v"
-`include "memory_access_stage.v"
-`include "write_back_stage.v"
+`include "modules/instruction_fetch_stage.v"
+`include "modules/instruction_decode_stage.v"
+`include "modules/execute_stage.v"
+`include "modules/memory_access_stage.v"
+`include "modules/write_back_stage.v"
 
 module processor (
     input wire clk,              // Clock signal
