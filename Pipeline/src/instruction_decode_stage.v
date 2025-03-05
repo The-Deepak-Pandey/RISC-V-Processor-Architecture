@@ -10,6 +10,7 @@ module instruction_decode_stage(
     input wire [4:0] rd_addr,
     input wire [63:0] rd_data,
     input wire [31:0] instruction,
+    input wire ctrl_hazard,
     output wire [63:0] rs1_data,
     output wire [63:0] rs2_data,
     output wire  [63:0] immediate,
@@ -23,6 +24,7 @@ module instruction_decode_stage(
 );
 
     control cnt(
+        .ctrl_hazard(ctrl_hazard),
         .opcode(instruction[6:0]),
         .branch(branch),
         .mem_read(mem_read),
@@ -32,6 +34,7 @@ module instruction_decode_stage(
         .alu_src(alu_src),
         .reg_write(reg_write)
     );
+
 
     register_file rf(
         .clk(clk),

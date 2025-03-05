@@ -1,4 +1,5 @@
 module control (
+    input wire        ctrl_hazard,
     input  wire [6:0] opcode,
     output reg        branch,
     output reg        mem_read,
@@ -24,60 +25,65 @@ module control (
         reg_write  = 0;
         alu_op     = 2'b00;
 
-        case (opcode)
-            R_TYPE: begin
-                // R-format: ALUSrc=0, MemtoReg=0, RegWrite=1, MemRead=0,
-                //           MemWrite=0, Branch=0, ALUOp=10
-                alu_src    = 0;
-                mem_to_reg = 0;
-                reg_write  = 1;
-                mem_read   = 0;
-                mem_write  = 0;
-                branch     = 0;
-                alu_op     = 2'b10;
-            end
+        if (ctrl_hazard) begin
+            // keep the control signals value zero
+        end 
+        else begin
+            case (opcode)
+                R_TYPE: begin
+                    // R-format: ALUSrc=0, MemtoReg=0, RegWrite=1, MemRead=0,
+                    //           MemWrite=0, Branch=0, ALUOp=10
+                    alu_src    = 0;
+                    mem_to_reg = 0;
+                    reg_write  = 1;
+                    mem_read   = 0;
+                    mem_write  = 0;
+                    branch     = 0;
+                    alu_op     = 2'b10;
+                end
 
-            LD: begin
-                // ld: ALUSrc=1, MemtoReg=1, RegWrite=1, MemRead=1,
-                //     MemWrite=0, Branch=0, ALUOp=00
-                alu_src    = 1;
-                mem_to_reg = 1;
-                reg_write  = 1;
-                mem_read   = 1;
-                mem_write  = 0;
-                branch     = 0;
-                alu_op     = 2'b00;  // add
-            end
+                LD: begin
+                    // ld: ALUSrc=1, MemtoReg=1, RegWrite=1, MemRead=1,
+                    //     MemWrite=0, Branch=0, ALUOp=00
+                    alu_src    = 1;
+                    mem_to_reg = 1;
+                    reg_write  = 1;
+                    mem_read   = 1;
+                    mem_write  = 0;
+                    branch     = 0;
+                    alu_op     = 2'b00;  // add
+                end
 
-            SD: begin
-                // sd: ALUSrc=1, MemtoReg=X (don't care), RegWrite=0, MemRead=0,
-                //     MemWrite=1, Branch=0, ALUOp=00
-                alu_src    = 1;
-                // mem_to_reg = don't care, often just set to 0
-                mem_to_reg = 0;
-                reg_write  = 0;
-                mem_read   = 0;
-                mem_write  = 1;
-                branch     = 0;
-                alu_op     = 2'b00;  // add
-            end
+                SD: begin
+                    // sd: ALUSrc=1, MemtoReg=X (don't care), RegWrite=0, MemRead=0,
+                    //     MemWrite=1, Branch=0, ALUOp=00
+                    alu_src    = 1;
+                    // mem_to_reg = don't care, often just set to 0
+                    mem_to_reg = 0;
+                    reg_write  = 0;
+                    mem_read   = 0;
+                    mem_write  = 1;
+                    branch     = 0;
+                    alu_op     = 2'b00;  // add
+                end
 
-            BEQ: begin
-                // beq: ALUSrc=0, MemtoReg=X, RegWrite=0, MemRead=0,
-                //      MemWrite=0, Branch=1, ALUOp=01
-                alu_src    = 0;
-                mem_to_reg = 0; // don't care
-                reg_write  = 0;
-                mem_read   = 0;
-                mem_write  = 0;
-                branch     = 1;
-                alu_op     = 2'b01;  // subtract
-            end
+                BEQ: begin
+                    // beq: ALUSrc=0, MemtoReg=X, RegWrite=0, MemRead=0,
+                    //      MemWrite=0, Branch=1, ALUOp=01
+                    alu_src    = 0;
+                    mem_to_reg = 0; // don't care
+                    reg_write  = 0;
+                    mem_read   = 0;
+                    mem_write  = 0;
+                    branch     = 1;
+                    alu_op     = 2'b01;  // subtract
+                end
 
-            default: begin
-                // For unrecognized opcodes, you can leave the default
-                // outputs (which are all zero here) or define new behavior.
-            end
-        endcase
+                default: begin
+                    // For unrecognized opcodes, you can leave the default
+                    // outputs (which are all zero here) or define new behavior.
+                end
+            endcase
+        end
     end
 endmodule

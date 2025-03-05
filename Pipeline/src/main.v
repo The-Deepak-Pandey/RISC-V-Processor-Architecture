@@ -4,6 +4,7 @@
 `include "memory_access_stage.v"
 `include "write_back_stage.v"
 `include "IF-ID_register.v"
+`include "ID_EX_register.v"
 
 module processor (
     input wire clk,              // Clock signal
@@ -28,10 +29,27 @@ module processor (
     wire [63:0] write_data;      // Data to write back to register file
     wire [3:0] alu_ctrl;         // ALU control signal
     wire [31:0] instructiond1;    // Fetched Instruction
-    wire [31:0] instructiond2;    // Fetched Instruction
+    // wire [31:0] instructiond2;    // Fetched Instruction
+    wire PC_write;
+    wire ifid_write;
+    wire ctrl_hazard;
 
+    wire [63:0] rs1_data_d2;
+    wire [63:0] rs2_data_d2;
+    wire  [4:0] rs1_d2;
+    wire  [4:0] rs2_d2;
+    wire  [4:0] rd_d2;
+    wire  [63:0] immediate_d2;
+    wire        branch_d2;
+    wire        mem_read_d2;
+    wire        mem_to_reg_d2;
+    wire [1:0]  alu_op_d2;
+    wire        mem_write_d2;
+    wire        alu_src_d2;
+    wire        reg_write_d2;
+    wire [2:0] func3_d2;
+    wire func7b5_d2;
 
-    // PC update logic
 
     // Instruction Fetch Stage
     instruction_fetch_stage if_stage (
@@ -39,6 +57,7 @@ module processor (
         .rst(rst),
         .ALU_zero(zero),
         .branch(branch),
+        .PC_write(PC_write),
         .branch_offset(immediate),
         .pc(pc),
         .instruction(instruction)
@@ -49,7 +68,7 @@ module processor (
         .clk(clk),
         .rst(rst),
         .instruction(instruction),
-        .ifid_write(1'b1),
+        .ifid_write(ifid_write),
         .instruction_d(instructiond1)
     );
 
@@ -62,6 +81,7 @@ module processor (
         .rd_addr(instructiond1[11:7]),
         .rd_data(write_data),
         .instruction(instructiond1),
+        .ctrl_hazard(ctrl_hazard),
         .rs1_data(rs1_data),
         .rs2_data(rs2_data),
         .immediate(immediate),
@@ -74,19 +94,58 @@ module processor (
         .reg_write(reg_write)
     );
 
+
+    // ID-EX Register
+    idex_reg idex_reg (
+        .clk(clk),
+        .rst(rst),
+        .rs1_data(rs1_data),
+        .rs2_data(rs2_data),
+        .rs1(instructiond1[19:15]),
+        .rs2(instructiond1[24:20]),
+        .rd(instructiond1[11:7]),
+        .immediate(immediate),
+        .branch(branch),
+        .mem_read(mem_read),
+        .mem_to_reg(mem_to_reg),
+        .alu_op(alu_op),
+        .mem_write(mem_write),
+        .alu_src(alu_src),
+        .reg_write(reg_write),
+        .func3(instructiond1[14:12]),
+        .func7b5(instructiond1[30]),
+        .rs1_data_d2(rs1_data),
+        .rs2_data_d2(rs2_data),
+        .rs1_d2(rs1_d2),
+        .rs2_d2(rs2_d2),
+        .rd_d2(rd_d2),
+        .immediate_d2(immediate_d2),
+        .branch_d2(branch_d2),
+        .mem_read_d2(mem_read_d2),
+        .mem_to_reg_d2(mem_to_reg_d2),
+        .alu_op_d2(alu_op_d2),
+        .mem_write_d2(mem_write_d2),
+        .alu_src_d2(alu_src_d2),
+        .reg_write_d2(reg_write_d2),
+        .func3_d2(func3_d2),
+        .func7b5_d2(func7b5_d2)
+    );
+
     // Execute Stage
     execute_stage ex_stage (
-        .alu_op(alu_op),
+        .alu_op(alu_op_d2),
         .alu_ctrl(alu_ctrl),
-        .alu_src(alu_src),
-        .rd1(rs1_data),
-        .rd2(rs2_data),
-        .imm(immediate),
-        .funct3(instruction[14:12]),
-        .funct7b5(instruction[30]),
+        .alu_src(alu_src_d2),
+        .rd1(rs1_data_d2),
+        .rd2(rs2_data_d2),
+        .imm(immediate_d2),
+        .funct3(func3_d2),
+        .funct7b5(func7b5_d2),
         .alu_result(alu_result),
         .alu_zero(zero)
     );
+
+    
 
     // Memory Access Stage
     memory_access_stage mem_stage (
