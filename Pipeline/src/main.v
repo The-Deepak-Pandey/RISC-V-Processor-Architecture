@@ -156,15 +156,15 @@ module processor (
 
     // Forwarding Unit
     forwarding_unit fwd_unit (
-        .rs1_id_ex(idex_reg.rs1),
-        .rs2_id_ex(idex_reg.rs2),
-        .rs1_ex_mem(),
-        .rs2_ex_mem(),
+        .rs1_id_ex(idex_reg.rs1_d2),
+        .rs2_id_ex(idex_reg.rs2_d2),
+        .rs1_ex_mem(exmem_reg.rs1_d3),
+        .rs2_ex_mem(exmem_reg.rs2_d3),
         .rs1_mem_wb(),
         .rs2_mem_wb(),
-        .reg_write_ex_mem(),
+        .reg_write_ex_mem(exmem_reg.reg_write_d3),
         .reg_write_mem_wb(),
-        .rd_ex_mem(),
+        .rd_ex_mem(exmem_reg.rd_d3),
         .rd_mem_wb(),
         .forward_a(forward_a),
         .forward_b(forward_b)
