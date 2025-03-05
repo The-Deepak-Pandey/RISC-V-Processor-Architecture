@@ -1,0 +1,41 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Mon Mar 03 17:08:01 2025
+[*]
+[dumpfile] "C:\IIIT-H\Study Material\Sem-4\IPA\Assignments\Project\RISC-V-Processor-Architecture\SEQ\res\main_tb.vcd"
+[dumpfile_mtime] "Mon Mar 03 16:54:04 2025"
+[dumpfile_size] 124276
+[savefile] "C:\IIIT-H\Study Material\Sem-4\IPA\Assignments\Project\RISC-V-Processor-Architecture\SEQ\res\main_tb.gtkw"
+[timestart] 0
+[size] 1536 841
+[pos] -1 -1
+*-3.663033 19 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] main_tb.
+[treeopen] main_tb.uut.
+[treeopen] main_tb.uut.ex_stage.
+[treeopen] main_tb.uut.id_stage.
+[sst_width] 197
+[signals_width] 166
+[sst_expanded] 1
+[sst_vpaned_height] 238
+@28
+main_tb.uut.clk
+main_tb.uut.branch
+main_tb.uut.zero
+@24
+main_tb.uut.pc[31:0]
+@28
+main_tb.uut.instruction[31:0]
+@24
+main_tb.uut.immediate[63:0]
+main_tb.uut.id_stage.rf.rs1_addr[4:0]
+main_tb.uut.rs1_data[63:0]
+main_tb.uut.id_stage.rf.rs2_addr[4:0]
+main_tb.uut.rs2_data[63:0]
+@22
+main_tb.uut.id_stage.rf.rd_addr[4:0]
+@24
+main_tb.uut.write_data[63:0]
+main_tb.uut.alu_result[63:0]
+[pattern_trace] 1
+[pattern_trace] 0
