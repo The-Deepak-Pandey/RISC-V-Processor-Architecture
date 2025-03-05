@@ -1,4 +1,4 @@
-`include "modules/components/data_memory.v"
+`include "data_memory.v"
 
 module memory_access_stage(
     input wire clk,
