@@ -6,6 +6,7 @@ module instruction_fetch_stage(
     input wire rst,
     input wire ALU_zero,
     input wire branch,
+    input wire PC_write
     input wire [63:0] branch_offset,
     output wire [31:0] pc,
     output wire [31:0] instruction
@@ -18,6 +19,7 @@ module instruction_fetch_stage(
         .ALU_zero(ALU_zero),
         .branch_offset(branch_offset),
         .branch(branch),
+        .PC_write(PC_write),
         .pc_out(pc)
     );
 
