@@ -11,6 +11,7 @@ module instruction_decode_stage(
     input wire [63:0] rd_data,
     input wire [31:0] instruction,
     input wire ctrl_hazard,
+    input wire reg_write_d4,
     output wire [63:0] rs1_data,
     output wire [63:0] rs2_data,
     output wire  [63:0] immediate,
@@ -35,11 +36,10 @@ module instruction_decode_stage(
         .reg_write(reg_write)
     );
 
-
     register_file rf(
         .clk(clk),
         .rst(rst),
-        .reg_write(reg_write),
+        .reg_write(reg_write_d4),
         .rs1_addr(rs1_addr),
         .rs2_addr(rs2_addr),
         .rd_addr(rd_addr),

@@ -7,6 +7,7 @@
 `include "ID_EX_register.v"
 `include "forwarding_unit.v"
 `include "EX_MEM_register.v"
+`include "MEM_WB_register.v"
 
 module processor (
     input wire clk,              // Clock signal
@@ -70,6 +71,12 @@ module processor (
     wire [1:0] forward_a;
     wire [1:0] forward_b;
 
+    wire mem_to_reg_d4;
+    wire reg_write_d4;
+    wire [63:0] read_data_d4;
+    wire [63:0] alu_result_d4;
+    wire [4:0] rd_d4;
+    wire [63:0] write_data_d4;
 
     // Instruction Fetch Stage
     instruction_fetch_stage if_stage (
@@ -99,8 +106,8 @@ module processor (
         .rst(rst),
         .rs1_addr(instructiond1[19:15]),
         .rs2_addr(instructiond1[24:20]),
-        .rd_addr(instructiond1[11:7]),
-        .rd_data(write_data),
+        .rd_addr(rd_d4),
+        .rd_data(write_data_d4),
         .instruction(instructiond1),
         .ctrl_hazard(ctrl_hazard),
         .rs1_data(rs1_data),
@@ -158,12 +165,10 @@ module processor (
     forwarding_unit fwd_unit (
         .rs1_id_ex(idex_reg.rs1_d2),
         .rs2_id_ex(idex_reg.rs2_d2),
-        .rs1_mem_wb(),
-        .rs2_mem_wb(),
         .reg_write_ex_mem(exmem_reg.reg_write_d3),
-        .reg_write_mem_wb(),
+        .reg_write_mem_wb(memwb_reg.reg_write_d4),
         .rd_ex_mem(exmem_reg.rd_d3),
-        .rd_mem_wb(),
+        .rd_mem_wb(memwb_reg.rd_d4),
         .forward_a(forward_a),
         .forward_b(forward_b)
     );
@@ -183,7 +188,6 @@ module processor (
         .alu_zero(zero),
         .pc_branch(pc_branch)
     );
-
 
     exmem_reg exmem_reg (
         .clk(clk),
@@ -214,22 +218,41 @@ module processor (
     // Memory Access Stage
     memory_access_stage mem_stage (
         .clk(clk),
-        .mem_read(mem_read),
-        .mem_write(mem_write),
-        .alu_result(alu_result),
-        .write_data(rs2_data),
-        .mem_data(mem_data)
+        .mem_read(mem_read_d3),
+        .mem_write(mem_write_d3),
+        .alu_zero(alu_zero_d3),
+        .branch(branch_d3),
+        .alu_result(alu_result_d3),
+        .write_data(rs2_data_d3),
+
+        .mem_data(mem_data),
+        .PCSrc(PCSrc)
+    );
+
+    // MEM-WB Register
+    mem_wb_reg memwb_reg (
+        .clk(clk),
+        .rst(rst),
+        .mem_to_reg(mem_to_reg_d3),
+        .reg_write(reg_write_d3),
+        .read_data(mem_data),
+        .alu_result_d3(alu_result_d3),
+        .rd_d3(rd_d3),
+
+        .mem_to_reg_d4(mem_to_reg_d4),
+        .reg_write_d4(reg_write_d4),
+        .read_data_d4(write_data_d4),
+        .alu_result_d4(alu_result_d4),
+        .rd_d4(rd_d4)
     );
 
     // Write Back Stage
     write_back wb_stage (
-        .mem_read(mem_read),
-        .read_data(mem_data),
-        .alu_result(alu_result),
-        .write_back_data(write_data)
+        .mem_read(mem_to_reg_d4),
+        .read_data(read_data_d4),
+        .alu_result(alu_result_d4),
+        .write_back_data(write_data_d4)
     );
-
-
 
     // Display register file array
     integer i;

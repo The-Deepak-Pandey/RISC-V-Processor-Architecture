@@ -1,8 +1,6 @@
 module forwarding_unit(
     input [4:0] rs1_id_ex,
     input [4:0] rs2_id_ex,
-    input [4:0] rs1_mem_wb,
-    input [4:0] rs2_mem_wb,
     input reg_write_ex_mem,
     input reg_write_mem_wb,
     input [4:0] rd_ex_mem,
