@@ -136,8 +136,8 @@ module processor (
         .alu_op(alu_op_d2),
         .alu_ctrl(alu_ctrl),
         .alu_src(alu_src_d2),
-        .rd1(rs1_data_d2),
-        .rd2(rs2_data_d2),
+        .rs1_data(rs1_data_d2),
+        .rs2_data(rs2_data_d2),
         .imm(immediate_d2),
         .funct3(func3_d2),
         .funct7b5(func7b5_d2),
@@ -145,7 +145,7 @@ module processor (
         .alu_zero(zero)
     );
 
-    
+
 
     // Memory Access Stage
     memory_access_stage mem_stage (

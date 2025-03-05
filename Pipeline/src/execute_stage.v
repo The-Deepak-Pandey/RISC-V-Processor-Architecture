@@ -4,8 +4,8 @@
 module execute_stage (
     input wire [1:0] alu_op,
     input wire alu_src,
-    input wire [63:0] rd1,
-    input wire [63:0] rd2,
+    input wire [63:0] rs1_data,
+    input wire [63:0] rs2_data,
     input wire [63:0] imm,
     input wire [2:0] funct3,
     input wire funct7b5, // bit [30] in R-type
@@ -17,8 +17,8 @@ module execute_stage (
     wire [63:0] alu_in1;
     wire [63:0] alu_in2;
 
-    assign alu_in1 = rd1;
-    assign alu_in2 = (alu_src) ? imm : rd2;
+    assign alu_in1 = rs1_data;
+    assign alu_in2 = (alu_src) ? imm : rs2_data;
 
     alu_control alu_ctrl_inst (
         .alu_op(alu_op),
