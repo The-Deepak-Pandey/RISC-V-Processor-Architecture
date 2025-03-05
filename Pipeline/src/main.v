@@ -33,7 +33,7 @@ module processor (
     wire [3:0] alu_ctrl;         // ALU control signal
     wire [31:0] instructiond1;    // Fetched Instruction
     // wire [31:0] instructiond2;    // Fetched Instruction
-    wire PC_write;
+    reg PC_write;
     wire ifid_write;
     wire ctrl_hazard;
     wire [63:0] pc_d1;
@@ -266,6 +266,10 @@ module processor (
                 $display("x%0d: %d", i, id_stage.rf.registers[i]);
             end
         end
+    end
+
+    initial begin
+        PC_write=1;
     end
 
     // Display memory file array
