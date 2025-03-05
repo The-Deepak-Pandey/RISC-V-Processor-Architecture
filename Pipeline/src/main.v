@@ -5,6 +5,7 @@
 `include "write_back_stage.v"
 `include "IF-ID_register.v"
 `include "ID_EX_register.v"
+`include "forwarding_unit.v"
 
 module processor (
     input wire clk,              // Clock signal
@@ -49,6 +50,9 @@ module processor (
     wire        reg_write_d2;
     wire [2:0] func3_d2;
     wire func7b5_d2;
+
+    wire [1:0] forward_a;
+    wire [1:0] forward_b;
 
 
     // Instruction Fetch Stage
@@ -129,6 +133,22 @@ module processor (
         .reg_write_d2(reg_write_d2),
         .func3_d2(func3_d2),
         .func7b5_d2(func7b5_d2)
+    );
+
+    // Forwarding Unit
+    forwarding_unit fwd_unit (
+        .rs1_id_ex(idex_reg.rs1),
+        .rs2_id_ex(idex_reg.rs2),
+        .rs1_ex_mem(),
+        .rs2_ex_mem(),
+        .rs1_mem_wb(),
+        .rs2_mem_wb(),
+        .reg_write_ex_mem(),
+        .reg_write_mem_wb(),
+        .rd_ex_mem(),
+        .rd_mem_wb(),
+        .forward_a(forward_a),
+        .forward_b(forward_b)
     );
 
     // Execute Stage
