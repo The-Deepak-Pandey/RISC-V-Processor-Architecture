@@ -2,6 +2,7 @@
 `include "alu.v"
 
 module execute_stage (
+    input wire [63:0] pc,
     input wire [1:0] alu_op,
     input wire alu_src,
     input wire [63:0] rs1_data,
@@ -11,7 +12,8 @@ module execute_stage (
     input wire funct7b5, // bit [30] in R-type
     output wire [63:0] alu_result,
     output wire [3:0] alu_ctrl,
-    output wire alu_zero
+    output wire alu_zero,
+    output wire [63:0] pc_branch
 );
 
     wire [63:0] alu_in1;
@@ -34,5 +36,8 @@ module execute_stage (
         .alu_result(alu_result),
         .alu_zero(alu_zero)
     );
+
+    assign pc_branch = pc + imm<<1;
+
 
 endmodule

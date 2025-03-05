@@ -34,7 +34,10 @@ module processor (
     wire PC_write;
     wire ifid_write;
     wire ctrl_hazard;
-
+    wire [63:0] pc_d1;
+    wire [63:0] pc_d2;
+    wire PCSrc;
+    wire [63:0] pc_branch;
     wire [63:0] rs1_data_d2;
     wire [63:0] rs2_data_d2;
     wire  [4:0] rs1_d2;
@@ -69,11 +72,13 @@ module processor (
 
     // IF-ID Register
     ifid_reg ifid_reg (
+        .pc(pc),
         .clk(clk),
         .rst(rst),
         .instruction(instruction),
         .ifid_write(ifid_write),
-        .instruction_d(instructiond1)
+        .instruction_d(instructiond1),
+        .pc_d(pc_d1)
     );
 
     // Instruction Decode Stage
@@ -101,6 +106,7 @@ module processor (
 
     // ID-EX Register
     idex_reg idex_reg (
+        .pc(pc_d1),
         .clk(clk),
         .rst(rst),
         .rs1_data(rs1_data),
@@ -132,7 +138,8 @@ module processor (
         .alu_src_d2(alu_src_d2),
         .reg_write_d2(reg_write_d2),
         .func3_d2(func3_d2),
-        .func7b5_d2(func7b5_d2)
+        .func7b5_d2(func7b5_d2),
+        .pc_d2(pc_d2)
     );
 
     // Forwarding Unit
@@ -153,6 +160,7 @@ module processor (
 
     // Execute Stage
     execute_stage ex_stage (
+        .pc(pc_d2),
         .alu_op(alu_op_d2),
         .alu_ctrl(alu_ctrl),
         .alu_src(alu_src_d2),
@@ -162,7 +170,8 @@ module processor (
         .funct3(func3_d2),
         .funct7b5(func7b5_d2),
         .alu_result(alu_result),
-        .alu_zero(zero)
+        .alu_zero(zero),
+        .pc_branch(pc_branch)
     );
 
 

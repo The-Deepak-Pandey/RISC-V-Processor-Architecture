@@ -1,6 +1,7 @@
 // `include "instruction_fetch_stage.v"
 
 module idex_reg(
+    input wire [63:0] pc;
     input wire clk,
     input wire rst,
     input wire [63:0] rs1_data,
@@ -33,7 +34,8 @@ module idex_reg(
     output reg        alu_src_d2,
     output reg        reg_write_d2,
     output reg [2:0] func3_d2,
-    output reg func7b5_d2
+    output reg func7b5_d2,
+    output reg [63:0] pc_d2
 
 );
 
