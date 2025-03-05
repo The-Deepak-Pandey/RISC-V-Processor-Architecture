@@ -1,8 +1,7 @@
     module PC_adder (
         input wire clk, rst,           // Clock and rst signals
-        input wire ALU_zero,             // Zero flag from ALU
-        input wire [63:0] branch_offset,   // Immediate generator output
-        input wire branch,               // Branch control signal
+        input wire PCSrc,               // Branch control signal
+        input wire [63:0] pc_branch,    // Branch PC value
         input wire PC_write,             // PC write control signal
         output reg [63:0] pc_out        // Updated PC value
     );
@@ -22,8 +21,8 @@
                     $display("PC rst to 0x%h", pc_out);
                 end 
                 // in case of branching
-                else if (branch & ALU_zero) begin
-                    pc_out <= pc_out + (branch_offset << 1);
+                else if (PCSrc) begin
+                    pc_out <= pc_branch;
                     $display("PC branched to 0x%h", pc_out);
                 end 
                 // normal case

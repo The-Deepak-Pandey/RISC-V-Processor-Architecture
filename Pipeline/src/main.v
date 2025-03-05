@@ -75,10 +75,9 @@ module processor (
     instruction_fetch_stage if_stage (
         .clk(clk),
         .rst(rst),
-        .ALU_zero(zero),
-        .branch(branch),
+        .PCSrc(PCSrc),
+        .pc_branch(pc_branch),
         .PC_write(PC_write),
-        .branch_offset(immediate),
         .pc(pc),
         .instruction(instruction)
     );
