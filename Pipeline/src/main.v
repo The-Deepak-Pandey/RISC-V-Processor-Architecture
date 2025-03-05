@@ -8,6 +8,7 @@
 `include "forwarding_unit.v"
 `include "EX_MEM_register.v"
 `include "MEM_WB_register.v"
+`include "hazard_detection_unit.v"
 
 module processor (
     input wire clk,              // Clock signal
@@ -33,7 +34,7 @@ module processor (
     wire [3:0] alu_ctrl;         // ALU control signal
     wire [31:0] instructiond1;    // Fetched Instruction
     // wire [31:0] instructiond2;    // Fetched Instruction
-    reg PC_write;
+    wire PC_write;
     wire ifid_write;
     wire ctrl_hazard;
     wire [63:0] pc_d1;
@@ -99,6 +100,17 @@ module processor (
         .instruction_d(instructiond1),
         .pc_d(pc_d1)
     );
+
+    hazard_det_unit hazard_det_unit(
+        .idex_memRead(mem_read_d2),
+        .rs1_d1(instructiond1[19:15]),
+        .rs2_d1(instructiond1[24:20]),
+        .rd_d2(rd_d2),
+        .ifid_write(ifid_write),
+        .PC_write(PC_write),
+        .ctrl_hazard(ctrl_hazard)
+    );
+
 
     // Instruction Decode Stage
     instruction_decode_stage id_stage (
@@ -224,7 +236,6 @@ module processor (
         .branch(branch_d3),
         .alu_result(alu_result_d3),
         .write_data(rs2_data_d3),
-
         .mem_data(mem_data),
         .PCSrc(PCSrc)
     );
@@ -254,6 +265,7 @@ module processor (
         .write_back_data(write_data_d4)
     );
 
+    
     // Display register file array
     integer i;
     always @(posedge clk or posedge rst) begin
@@ -268,9 +280,7 @@ module processor (
         end
     end
 
-    initial begin
-        PC_write=1;
-    end
+  
 
     // Display memory file array
     integer j;

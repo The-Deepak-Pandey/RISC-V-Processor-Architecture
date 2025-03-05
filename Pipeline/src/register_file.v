@@ -44,7 +44,7 @@ module register_file (
     
 
     // Read operation
-    always @(*) begin
+    always @(negedge clk) begin
         // x0 is hardwired to 0
         rs1_data = (rs1_addr == 5'b00000) ? 64'h0 : registers[rs1_addr];
         rs2_data = (rs2_addr == 5'b00000) ? 64'h0 : registers[rs2_addr];

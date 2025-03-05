@@ -1,0 +1,73 @@
+#! /usr/bin/vvp
+:ivl_version "12.0 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/system.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_sys.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_textio.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/v2005_math.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/va_math.vpi";
+S_0x610c1e63f490 .scope module, "hazard_det_unit" "hazard_det_unit" 2 1;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "idex_memRead";
+    .port_info 1 /INPUT 5 "rs1_d1";
+    .port_info 2 /INPUT 5 "rs2_d1";
+    .port_info 3 /INPUT 5 "rd_d2";
+    .port_info 4 /OUTPUT 1 "ifid_write";
+    .port_info 5 /OUTPUT 1 "PC_write";
+    .port_info 6 /OUTPUT 1 "ctrl_hazard";
+L_0x610c1e68e390 .functor OR 1, L_0x610c1e68e190, L_0x610c1e68e290, C4<0>, C4<0>;
+o0x72accfaf13d8 .functor BUFZ 1, C4<z>; HiZ drive
+L_0x610c1e68e4a0 .functor AND 1, o0x72accfaf13d8, L_0x610c1e68e390, C4<1>, C4<1>;
+L_0x610c1e68e960 .functor OR 1, L_0x610c1e68e750, L_0x610c1e68e870, C4<0>, C4<0>;
+L_0x610c1e68ea20 .functor AND 1, o0x72accfaf13d8, L_0x610c1e68e960, C4<1>, C4<1>;
+L_0x610c1e68eec0 .functor OR 1, L_0x610c1e68ed30, L_0x610c1e68edd0, C4<0>, C4<0>;
+L_0x610c1e68efd0 .functor AND 1, o0x72accfaf13d8, L_0x610c1e68eec0, C4<1>, C4<1>;
+v0x610c1e63f6d0_0 .net "PC_write", 0 0, L_0x610c1e68f120;  1 drivers
+v0x610c1e68cbb0_0 .net *"_ivl_0", 0 0, L_0x610c1e68e190;  1 drivers
+L_0x72accfaa8060 .functor BUFT 1, C4<1>, C4<0>, C4<0>, C4<0>;
+v0x610c1e68cc70_0 .net/2u *"_ivl_10", 0 0, L_0x72accfaa8060;  1 drivers
+v0x610c1e68cd30_0 .net *"_ivl_14", 0 0, L_0x610c1e68e750;  1 drivers
+v0x610c1e68cdf0_0 .net *"_ivl_16", 0 0, L_0x610c1e68e870;  1 drivers
+v0x610c1e68ceb0_0 .net *"_ivl_19", 0 0, L_0x610c1e68e960;  1 drivers
+v0x610c1e68cf70_0 .net *"_ivl_2", 0 0, L_0x610c1e68e290;  1 drivers
+v0x610c1e68d030_0 .net *"_ivl_20", 0 0, L_0x610c1e68ea20;  1 drivers
+L_0x72accfaa80a8 .functor BUFT 1, C4<1>, C4<0>, C4<0>, C4<0>;
+v0x610c1e68d110_0 .net/2u *"_ivl_22", 0 0, L_0x72accfaa80a8;  1 drivers
+L_0x72accfaa80f0 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0x610c1e68d280_0 .net/2u *"_ivl_24", 0 0, L_0x72accfaa80f0;  1 drivers
+v0x610c1e68d360_0 .net *"_ivl_28", 0 0, L_0x610c1e68ed30;  1 drivers
+v0x610c1e68d420_0 .net *"_ivl_30", 0 0, L_0x610c1e68edd0;  1 drivers
+v0x610c1e68d4e0_0 .net *"_ivl_33", 0 0, L_0x610c1e68eec0;  1 drivers
+v0x610c1e68d5a0_0 .net *"_ivl_34", 0 0, L_0x610c1e68efd0;  1 drivers
+L_0x72accfaa8138 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0x610c1e68d680_0 .net/2u *"_ivl_36", 0 0, L_0x72accfaa8138;  1 drivers
+L_0x72accfaa8180 .functor BUFT 1, C4<1>, C4<0>, C4<0>, C4<0>;
+v0x610c1e68d760_0 .net/2u *"_ivl_38", 0 0, L_0x72accfaa8180;  1 drivers
+v0x610c1e68d840_0 .net *"_ivl_5", 0 0, L_0x610c1e68e390;  1 drivers
+v0x610c1e68da10_0 .net *"_ivl_6", 0 0, L_0x610c1e68e4a0;  1 drivers
+L_0x72accfaa8018 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0x610c1e68daf0_0 .net/2u *"_ivl_8", 0 0, L_0x72accfaa8018;  1 drivers
+v0x610c1e68dbd0_0 .net "ctrl_hazard", 0 0, L_0x610c1e68eb60;  1 drivers
+v0x610c1e68dc90_0 .net "idex_memRead", 0 0, o0x72accfaf13d8;  0 drivers
+v0x610c1e68dd50_0 .net "ifid_write", 0 0, L_0x610c1e68e590;  1 drivers
+o0x72accfaf1438 .functor BUFZ 5, C4<zzzzz>; HiZ drive
+v0x610c1e68de10_0 .net "rd_d2", 4 0, o0x72accfaf1438;  0 drivers
+o0x72accfaf1468 .functor BUFZ 5, C4<zzzzz>; HiZ drive
+v0x610c1e68def0_0 .net "rs1_d1", 4 0, o0x72accfaf1468;  0 drivers
+o0x72accfaf1498 .functor BUFZ 5, C4<zzzzz>; HiZ drive
+v0x610c1e68dfd0_0 .net "rs2_d1", 4 0, o0x72accfaf1498;  0 drivers
+L_0x610c1e68e190 .cmp/eq 5, o0x72accfaf1468, o0x72accfaf1438;
+L_0x610c1e68e290 .cmp/eq 5, o0x72accfaf1498, o0x72accfaf1438;
+L_0x610c1e68e590 .functor MUXZ 1, L_0x72accfaa8060, L_0x72accfaa8018, L_0x610c1e68e4a0, C4<>;
+L_0x610c1e68e750 .cmp/eq 5, o0x72accfaf1468, o0x72accfaf1438;
+L_0x610c1e68e870 .cmp/eq 5, o0x72accfaf1498, o0x72accfaf1438;
+L_0x610c1e68eb60 .functor MUXZ 1, L_0x72accfaa80f0, L_0x72accfaa80a8, L_0x610c1e68ea20, C4<>;
+L_0x610c1e68ed30 .cmp/eq 5, o0x72accfaf1468, o0x72accfaf1438;
+L_0x610c1e68edd0 .cmp/eq 5, o0x72accfaf1498, o0x72accfaf1438;
+L_0x610c1e68f120 .functor MUXZ 1, L_0x72accfaa8180, L_0x72accfaa8138, L_0x610c1e68efd0, C4<>;
+# The file index is used to find the file name in the following table.
+:file_names 3;
+    "N/A";
+    "<interactive>";
+    "hazard_detection_unit.v";
