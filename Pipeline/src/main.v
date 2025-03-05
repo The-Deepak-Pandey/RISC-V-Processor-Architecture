@@ -6,13 +6,14 @@
 `include "IF-ID_register.v"
 `include "ID_EX_register.v"
 `include "forwarding_unit.v"
+`include "EX_MEM_register.v"
 
 module processor (
     input wire clk,              // Clock signal
     input wire rst               // Reset signal
 );
 
-    wire [31:0] pc;              // Program Counter
+    wire [63:0] pc;              // Program Counter
     wire [31:0] instruction;     // Fetched Instruction
     wire [63:0] rs1_data;        // Data from source register 1
     wire [63:0] rs2_data;        // Data from source register 2
@@ -53,6 +54,18 @@ module processor (
     wire        reg_write_d2;
     wire [2:0] func3_d2;
     wire func7b5_d2;
+
+    wire mem_to_reg_d3;
+    wire reg_write_d3;
+    wire branch_d3;
+    wire mem_read_d3;
+    wire mem_write_d3;
+    wire [63:0] pc_branch_d3;
+    wire [63:0] alu_result_d3;
+    wire alu_zero_d3;
+    wire [63:0] rs2_data_d3;
+    wire [4:0] rd_d3;
+
 
     wire [1:0] forward_a;
     wire [1:0] forward_b;
@@ -175,6 +188,31 @@ module processor (
     );
 
 
+    exmem_reg exmem_reg (
+        .clk(clk),
+        .rst(rst),
+        .mem_to_reg(mem_to_reg_d2),
+        .reg_write(reg_write_d2),
+        .branch(branch_d2),
+        .mem_read(mem_read_d2),
+        .mem_write(mem_write_d2),
+        .pc_branch(pc_branch),
+        .alu_result(alu_result),
+        .alu_zero(zero),
+        .rs2_data(rs2_data_d2),
+        .rd(rd_d2),
+
+        .mem_to_reg_d3(mem_to_reg_d3),
+        .reg_write_d3(reg_write_d3),
+        .branch_d3(branch_d3),
+        .mem_read_d3(mem_read_d3),
+        .mem_write_d3(mem_write_d3),
+        .pc_branch_d3(pc_branch_d3),
+        .alu_result_d3(alu_result_d3),
+        .alu_zero_d3(alu_zero_d3),
+        .rs2_data_d3(rs2_data_d3),
+        .rd_d3(rd_d3)
+    );
 
     // Memory Access Stage
     memory_access_stage mem_stage (

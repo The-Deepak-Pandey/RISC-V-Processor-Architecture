@@ -4,7 +4,7 @@
         input wire [63:0] branch_offset,   // Immediate generator output
         input wire branch,               // Branch control signal
         input wire PC_write,             // PC write control signal
-        output reg [31:0] pc_out        // Updated PC value
+        output reg [63:0] pc_out        // Updated PC value
     );
 
         // max pc limit  = 128 inst * 4 bytes

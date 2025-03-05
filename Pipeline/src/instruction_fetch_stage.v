@@ -8,7 +8,7 @@ module instruction_fetch_stage(
     input wire branch,
     input wire PC_write,
     input wire [63:0] branch_offset,
-    output wire [31:0] pc,
+    output wire [63:0] pc,
     output wire [31:0] instruction
 );
 

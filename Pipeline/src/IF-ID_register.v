@@ -7,7 +7,7 @@ module ifid_reg(
     input wire [31:0] instruction,
     input wire ifid_write,
     output reg [31:0] instruction_d,
-    output wire [63:0] pc_d
+    output reg [63:0] pc_d
 );
 
     always @(posedge clk or posedge rst) begin

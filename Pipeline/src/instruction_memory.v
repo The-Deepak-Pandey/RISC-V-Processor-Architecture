@@ -1,5 +1,5 @@
 module instruction_memory(
-    input wire [31:0] pc,         // Program Counter (PC)
+    input wire [63:0] pc,         // Program Counter (PC)
     output reg [31:0] instruction // Output: Fetched Instruction
 );
 
