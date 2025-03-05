@@ -1,4 +1,4 @@
-`include "instruction_fetch_stage.v"
+// `include "instruction_fetch_stage.v"
 
 module ifid_reg(
     input wire clk,
@@ -11,9 +11,13 @@ module ifid_reg(
     always @(posedge clk or posedge rst) begin
         if (rst) begin
             instruction_d <= 32'b0;
-        end else if (ifid_write) begin
-            instruction_d <= instruction;
         end
-    end
+        else if (ifid_write) begin
+            instruction_d <= instruction;
+        end 
+        else begin
+                $display("stalling IF-ID register");
+            end
+        end
 
 endmodule

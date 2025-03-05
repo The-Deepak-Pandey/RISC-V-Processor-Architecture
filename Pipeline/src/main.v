@@ -3,6 +3,7 @@
 `include "execute_stage.v"
 `include "memory_access_stage.v"
 `include "write_back_stage.v"
+`include "IF-ID_register.v"
 
 module processor (
     input wire clk,              // Clock signal
@@ -26,7 +27,8 @@ module processor (
     wire [63:0] mem_data;        // Data read from memory
     wire [63:0] write_data;      // Data to write back to register file
     wire [3:0] alu_ctrl;         // ALU control signal
-    
+    wire [31:0] instructiond1;    // Fetched Instruction
+    wire [31:0] instructiond2;    // Fetched Instruction
 
 
     // PC update logic
@@ -42,15 +44,24 @@ module processor (
         .instruction(instruction)
     );
 
+    // IF-ID Register
+    ifid_reg ifid_reg (
+        .clk(clk),
+        .rst(rst),
+        .instruction(instruction),
+        .ifid_write(1'b1),
+        .instruction_d(instructiond1)
+    );
+
     // Instruction Decode Stage
     instruction_decode_stage id_stage (
         .clk(clk),
         .rst(rst),
-        .rs1_addr(instruction[19:15]),
-        .rs2_addr(instruction[24:20]),
-        .rd_addr(instruction[11:7]),
+        .rs1_addr(instructiond1[19:15]),
+        .rs2_addr(instructiond1[24:20]),
+        .rd_addr(instructiond1[11:7]),
         .rd_data(write_data),
-        .instruction(instruction),
+        .instruction(instructiond1),
         .rs1_data(rs1_data),
         .rs2_data(rs2_data),
         .immediate(immediate),
@@ -94,6 +105,8 @@ module processor (
         .alu_result(alu_result),
         .write_back_data(write_data)
     );
+
+
 
     // Display register file array
     integer i;
