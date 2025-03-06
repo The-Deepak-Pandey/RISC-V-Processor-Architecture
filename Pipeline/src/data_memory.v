@@ -3,10 +3,10 @@ module data_memory (
     input wire mem_read,       // Memory read control signal
     input wire mem_write,      // Memory write control signal
     input wire [63:0] address, // Memory address (64-bit for RV64)
-    input wire [63:0] write_data, // Data to be written
+    input wire signed [63:0] write_data, // Data to be written
     output reg [63:0] read_data  // Data read from memory
 );
-    reg [63:0] memory [0:1023];  // 32 64-bit memory locations
+    reg signed [63:0] memory [0:1023];  // 32 64-bit memory locations
 
     integer i;
     initial begin
