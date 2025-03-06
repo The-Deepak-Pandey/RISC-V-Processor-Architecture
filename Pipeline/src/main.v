@@ -84,7 +84,7 @@ module processor (
         .clk(clk),
         .rst(rst),
         .PCSrc(PCSrc),
-        .pc_branch(pc_branch),
+        .pc_branch(pc_branch_d3),
         .PC_write(PC_write),
         .pc(pc),
         .instruction(instruction)

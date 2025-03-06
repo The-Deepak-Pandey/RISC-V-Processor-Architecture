@@ -1,5 +1,6 @@
     module PC_adder (
-        input wire clk, rst,           // Clock and rst signals
+        input wire clk,             // Clock signal
+        input wire rst,           // Reset signal
         input wire PCSrc,               // Branch control signal
         input wire [63:0] pc_branch,    // Branch PC value
         input wire PC_write,             // PC write control signal
