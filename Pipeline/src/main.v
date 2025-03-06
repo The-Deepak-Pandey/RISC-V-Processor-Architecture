@@ -186,14 +186,39 @@ module processor (
         .forward_b(forward_b)
     );
 
+    reg [63:0] forward_rs1;
+    reg [63:0] forward_rs2;
+
+    always @(*) begin
+        if (forward_a == 2'b00)
+            forward_rs1 = rs1_data_d2;
+        else if (forward_a == 2'b10)
+            forward_rs1 = alu_result_d3;
+        else if (forward_a == 2'b01)
+            forward_rs1 = write_data_d4;
+        else
+            forward_rs1 = rs1_data_d2;
+    end
+
+    always @(*) begin
+        if (forward_b == 2'b00)
+            forward_rs2 = rs2_data_d2;
+        else if (forward_b == 2'b10)
+            forward_rs2 = alu_result_d3;
+        else if (forward_b == 2'b01)
+            forward_rs2 = write_data_d4;
+        else
+            forward_rs2 = rs2_data_d2;
+    end
+
     // Execute Stage
     execute_stage ex_stage (
         .pc(pc_d2),
         .alu_op(alu_op_d2),
         .alu_ctrl(alu_ctrl),
         .alu_src(alu_src_d2),
-        .rs1_data(rs1_data_d2),
-        .rs2_data(rs2_data_d2),
+        .rs1_data(forward_rs1),
+        .rs2_data(forward_rs2),
         .imm(immediate_d2),
         .funct3(func3_d2),
         .funct7b5(func7b5_d2),
