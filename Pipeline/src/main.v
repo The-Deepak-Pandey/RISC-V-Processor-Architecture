@@ -101,7 +101,8 @@ module processor (
         .pc_d(pc_d1)
     );
 
-    hazard_det_unit hazard_det_unit(
+    // Hazard Detection Unit
+    hazard_det_unit hazard_det_unit (
         .idex_memRead(mem_read_d2),
         .rs1_d1(instructiond1[19:15]),
         .rs2_d1(instructiond1[24:20]),
@@ -110,7 +111,6 @@ module processor (
         .PC_write(PC_write),
         .ctrl_hazard(ctrl_hazard)
     );
-
 
     // Instruction Decode Stage
     instruction_decode_stage id_stage (
@@ -134,7 +134,6 @@ module processor (
         .alu_src(alu_src),
         .reg_write(reg_write)
     );
-
 
     // ID-EX Register
     idex_reg idex_reg (
