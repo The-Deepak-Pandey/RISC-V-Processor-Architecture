@@ -122,6 +122,7 @@ module processor (
         .rd_data(write_data_d4),
         .instruction(instructiond1),
         .ctrl_hazard(ctrl_hazard),
+        .reg_write_d4(reg_write_d4),
         .rs1_data(rs1_data),
         .rs2_data(rs2_data),
         .immediate(immediate),
@@ -252,7 +253,7 @@ module processor (
 
         .mem_to_reg_d4(mem_to_reg_d4),
         .reg_write_d4(reg_write_d4),
-        .read_data_d4(write_data_d4),
+        .read_data_d4(read_data_d4),
         .alu_result_d4(alu_result_d4),
         .rd_d4(rd_d4)
     );
