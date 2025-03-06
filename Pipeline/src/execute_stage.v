@@ -37,7 +37,6 @@ module execute_stage (
         .alu_zero(alu_zero)
     );
 
-    assign pc_branch = pc + imm<<1;
-
+    assign pc_branch = pc + imm << 1;
 
 endmodule
