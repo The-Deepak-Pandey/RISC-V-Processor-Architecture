@@ -1,8 +1,8 @@
 module alu (
-    input wire [63:0] in1,
-    input wire [63:0] in2,
+    input wire signed [63:0] in1,
+    input wire signed [63:0] in2,
     input wire [3:0]  alu_ctrl,
-    output reg [63:0] alu_result,
+    output reg signed [63:0] alu_result,
     output wire alu_zero
 );
     localparam AND_CTRL = 4'b0000;
@@ -10,10 +10,10 @@ module alu (
     localparam ADD_CTRL = 4'b0010;
     localparam SUB_CTRL = 4'b0110;
 
-    wire [63:0] and_result;
-    wire [63:0] or_result;
-    wire [63:0] add_result;
-    wire [63:0] sub_result;
+    wire signed [63:0] and_result;
+    wire signed [63:0] or_result;
+    wire signed [63:0] add_result;
+    wire signed [63:0] sub_result;
 
     AND and_inst (
         .A({in1}),

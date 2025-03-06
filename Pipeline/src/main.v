@@ -17,9 +17,9 @@ module processor (
 
     wire [63:0] pc;              // Program Counter
     wire [31:0] instruction;     // Fetched Instruction
-    wire [63:0] rs1_data;        // Data from source register 1
-    wire [63:0] rs2_data;        // Data from source register 2
-    wire [63:0] immediate;       // Immediate value
+    wire signed [63:0] rs1_data;        // Data from source register 1
+    wire signed [63:0] rs2_data;        // Data from source register 2
+    wire signed [63:0] immediate;       // Immediate value
     wire branch;                 // Branch control signal
     wire mem_read;               // Memory read control signal
     wire mem_to_reg;             // Memory to register control signal
@@ -27,9 +27,9 @@ module processor (
     wire mem_write;              // Memory write control signal
     wire alu_src;                // ALU source control signal
     wire reg_write;              // Register write control signal
-    wire [63:0] alu_result;      // ALU result
+    wire signed [63:0] alu_result;      // ALU result
     wire zero;                   // Zero flag from ALU
-    wire [63:0] mem_data;        // Data read from memory
+    wire signed [63:0] mem_data;        // Data read from memory
     wire [63:0] write_data;      // Data to write back to register file
     wire [3:0] alu_ctrl;         // ALU control signal
     wire [31:0] instructiond1;    // Fetched Instruction
@@ -41,12 +41,12 @@ module processor (
     wire [63:0] pc_d2;
     wire PCSrc;
     wire [63:0] pc_branch;
-    wire [63:0] rs1_data_d2;
-    wire [63:0] rs2_data_d2;
+    wire signed [63:0] rs1_data_d2;
+    wire signed [63:0] rs2_data_d2;
     wire  [4:0] rs1_d2;
     wire  [4:0] rs2_d2;
     wire  [4:0] rd_d2;
-    wire  [63:0] immediate_d2;
+    wire signed  [63:0] immediate_d2;
     wire        branch_d2;
     wire        mem_read_d2;
     wire        mem_to_reg_d2;
@@ -63,9 +63,9 @@ module processor (
     wire mem_read_d3;
     wire mem_write_d3;
     wire [63:0] pc_branch_d3;
-    wire [63:0] alu_result_d3;
+    wire signed [63:0] alu_result_d3;
     wire alu_zero_d3;
-    wire [63:0] rs2_data_d3;
+    wire signed [63:0] rs2_data_d3;
     wire [4:0] rd_d3;
 
 
@@ -74,10 +74,10 @@ module processor (
 
     wire mem_to_reg_d4;
     wire reg_write_d4;
-    wire [63:0] read_data_d4;
-    wire [63:0] alu_result_d4;
+    wire signed [63:0] read_data_d4;
+    wire signed [63:0] alu_result_d4;
     wire [4:0] rd_d4;
-    wire [63:0] write_data_d4;
+    wire signed [63:0] write_data_d4;
 
     // Instruction Fetch Stage
     instruction_fetch_stage if_stage (
