@@ -97,6 +97,7 @@ module processor (
         .rst(rst),
         .instruction(instruction),
         .ifid_write(ifid_write),
+        .flush(PCSrc),
         .instruction_d(instructiond1),
         .pc_d(pc_d1)
     );
@@ -155,6 +156,8 @@ module processor (
         .reg_write(reg_write),
         .func3(instructiond1[14:12]),
         .func7b5(instructiond1[30]),
+        .flush(PCSrc),
+
         .rs1_data_d2(rs1_data_d2),
         .rs2_data_d2(rs2_data_d2),
         .rs1_d2(rs1_d2),
@@ -239,6 +242,7 @@ module processor (
         .alu_zero(zero),
         .rs2_data(rs2_data_d2),
         .rd(rd_d2),
+        .flush(PCSrc),
 
         .mem_to_reg_d3(mem_to_reg_d3),
         .reg_write_d3(reg_write_d3),
