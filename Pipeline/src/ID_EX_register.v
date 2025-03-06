@@ -56,6 +56,7 @@ module idex_reg(
             reg_write_d2 <= 1'b0;
             func3_d2 <= 3'b0;
             func7b5_d2 <= 1'b0;
+            pc_d2 <= 64'b0;
         end
         else begin
             rs1_data_d2 <= rs1_data;
@@ -73,6 +74,7 @@ module idex_reg(
             reg_write_d2 <= reg_write;
             func3_d2 <= func3;
             func7b5_d2 <= func7b5;
+            pc_d2 <= pc;
         end
     end
 

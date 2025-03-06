@@ -41,6 +41,8 @@
             else begin
                 $display("PC not updated, stalling");
             end
+            $display("DEBUG: clk=%b, rst=%b, PC_write=%b, PCSrc=%b, pc_out=%h, pc_branch=%h", clk, rst, PC_write, PCSrc, pc_out, pc_branch);
+
         end
 
     endmodule
