@@ -3,6 +3,8 @@
 1. `sd x2, 8(x0)`
 2. `ld x3, 8(x0)`
 3. `add x5, x1, x3`
+4. `add x5, x5, x2`
+4. `add x5, x5, x2`
 4. `beq x0, x1, 8`
 5. `beq x0, x0, 8`
 6. `nop`
@@ -34,4 +36,4 @@ and
 
 left are made 0.
 
-the final value of x8 should be equal to 21. Which is happening in our processor. Hence our processor is perfect.
+The final value of x8 should be equal to 21. Which is happening in our processor. Hence our processor is perfect.
