@@ -13,7 +13,7 @@ module execute_stage (
     output wire [63:0] alu_result,
     output wire [3:0] alu_ctrl,
     output wire alu_zero,
-    output wire [63:0] pc_branch
+    output reg [63:0] pc_branch
 );
 
     wire [63:0] alu_in1;
@@ -37,7 +37,9 @@ module execute_stage (
         .alu_zero(alu_zero)
     );
 
-    assign pc_branch = pc + imm<<1;
-
+    always @(*) begin
+        pc_branch = pc + (imm << 1);
+        $display("pc_branch is now %d", pc_branch);
+    end
 
 endmodule

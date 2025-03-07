@@ -1,5 +1,6 @@
     module PC_adder (
-        input wire clk, rst,           // Clock and rst signals
+        input wire clk,             // Clock signal
+        input wire rst,           // Reset signal
         input wire PCSrc,               // Branch control signal
         input wire [63:0] pc_branch,    // Branch PC value
         input wire PC_write,             // PC write control signal
@@ -40,6 +41,8 @@
             else begin
                 $display("PC not updated, stalling");
             end
+            $display("DEBUG: clk=%b, rst=%b, PC_write=%b, PCSrc=%b, pc_out=%h, pc_branch=%h", clk, rst, PC_write, PCSrc, pc_out, pc_branch);
+
         end
 
     endmodule

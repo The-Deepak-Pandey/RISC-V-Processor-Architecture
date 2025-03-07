@@ -5,8 +5,8 @@ module instruction_fetch_stage(
     input wire clk, 
     input wire rst,
     input wire PCSrc,
-    input wire PC_write,
     input wire [63:0] pc_branch,
+    input wire PC_write,
     output wire [63:0] pc,
     output wire [31:0] instruction
 );

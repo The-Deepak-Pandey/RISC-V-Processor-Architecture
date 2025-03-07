@@ -7,7 +7,6 @@ module main_tb;
         // Initialize signals
         clk = 0;
         rst = 1;
-
         // Release reset
         #10 rst = 0;
 

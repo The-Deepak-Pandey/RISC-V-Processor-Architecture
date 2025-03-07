@@ -12,6 +12,7 @@ module exmem_reg(
     input wire alu_zero,
     input wire [63:0] rs2_data,
     input wire [4:0] rd,
+    input wire flush,
 
     output reg mem_to_reg_d3,
     output reg reg_write_d3,
@@ -38,6 +39,19 @@ always @(posedge clk or posedge rst) begin
         alu_zero_d3 <= 1'b0;
         rs2_data_d3 <= 64'b0;
         rd_d3 <= 5'b0;
+    end
+    else if (flush) begin
+        mem_to_reg_d3 <= 1'b0;
+        reg_write_d3 <= 1'b0;
+        branch_d3 <= 1'b0;
+        mem_read_d3 <= 1'b0;
+        mem_write_d3 <= 1'b0;
+        pc_branch_d3 <= 64'b0;
+        alu_result_d3 <= 64'b0;
+        alu_zero_d3 <= 1'b0;
+        rs2_data_d3 <= 64'b0;
+        rd_d3 <= 5'b0;
+        $display("flushing EX-MEM register due to wrong branch prediction");
     end
     else begin
         mem_to_reg_d3 <= mem_to_reg;

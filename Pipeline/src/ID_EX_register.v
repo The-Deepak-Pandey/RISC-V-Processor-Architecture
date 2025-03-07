@@ -19,6 +19,7 @@ module idex_reg(
     input wire        reg_write,
     input wire [2:0] func3,
     input wire func7b5,
+    input wire flush,
     
     output reg [63:0] rs1_data_d2,
     output reg [63:0] rs2_data_d2,
@@ -56,6 +57,26 @@ module idex_reg(
             reg_write_d2 <= 1'b0;
             func3_d2 <= 3'b0;
             func7b5_d2 <= 1'b0;
+            pc_d2 <= 64'b0;
+        end
+        else if (flush) begin
+            rs1_data_d2 <= 64'b0;
+            rs2_data_d2 <= 64'b0;
+            rs1_d2 <= 5'b0;
+            rs2_d2 <= 5'b0;
+            rd_d2 <= 5'b0;
+            immediate_d2 <= 64'b0;
+            branch_d2 <= 1'b0;
+            mem_read_d2 <= 1'b0;
+            mem_to_reg_d2 <= 1'b0;
+            alu_op_d2 <= 2'b00;
+            mem_write_d2 <= 1'b0;
+            alu_src_d2 <= 1'b0;
+            reg_write_d2 <= 1'b0;
+            func3_d2 <= 3'b0;
+            func7b5_d2 <= 1'b0;
+            pc_d2 <= 64'b0;
+            $display("flushing ID-EX register due to wrong branch prediction");
         end
         else begin
             rs1_data_d2 <= rs1_data;
@@ -73,6 +94,7 @@ module idex_reg(
             reg_write_d2 <= reg_write;
             func3_d2 <= func3;
             func7b5_d2 <= func7b5;
+            pc_d2 <= pc;
         end
     end
 

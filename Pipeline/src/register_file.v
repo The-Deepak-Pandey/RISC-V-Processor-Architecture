@@ -9,7 +9,7 @@ module register_file (
     output reg [63:0] rs1_data,
     output reg [63:0] rs2_data
 );
-    reg [63:0] registers [0:31];  // 32 64-bit registers
+    reg signed [63:0] registers [0:31];  // 32 64-bit registers
     integer i;
 
     initial begin
@@ -19,12 +19,13 @@ module register_file (
 
         // test values initialization
         registers[1] = 64'd1;
-        registers[2] = 64'd13;
+        registers[2] = 64'd2;
         registers[3] = 64'd3;
         registers[4] = 64'd4;
         registers[5] = 64'd5;
         registers[6] = 64'd6;
         registers[7] = 64'd7;
+        registers[8] = 64'd8;
 
         // Debug output for register initialization
         $display("Register Initialization testing:");
@@ -44,7 +45,7 @@ module register_file (
     
 
     // Read operation
-    always @(*) begin
+    always @(negedge clk) begin
         // x0 is hardwired to 0
         rs1_data = (rs1_addr == 5'b00000) ? 64'h0 : registers[rs1_addr];
         rs2_data = (rs2_addr == 5'b00000) ? 64'h0 : registers[rs2_addr];
@@ -59,7 +60,7 @@ module register_file (
 
                 // test values initialization
                 registers[1] <= 64'd1;
-                registers[2] <= 64'd13;
+                registers[2] <= 64'd2;
                 registers[3] <= 64'd3;
                 registers[4] <= 64'd4;
                 registers[5] <= 64'd5;
