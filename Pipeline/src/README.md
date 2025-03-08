@@ -1,17 +1,17 @@
 ## We ran the given program for testing our processor -
 
-1. `sd x2, 8(x0)`
-2. `ld x3, 8(x0)`
-3. `add x5, x1, x3`
-4. `add x5, x5, x2`
-4. `add x5, x5, x2`
-4. `beq x0, x1, 12`
-5. `beq x0, x0, 10`
-3. `add x5, x1, x3`
-3. `add x5, x1, x3`
-3. `add x5, x1, x3`
-3. `add x5, x1, x3`
-9. `add x8, x5, x7`
+1.  `sd x2, 8(x0)`
+2.  `ld x3, 8(x0)`
+3.  `add x5, x1, x3`
+4.  `add x5, x5, x2`
+5.  `add x5, x5, x2`
+6.  `beq x0, x1, 12`
+7.  `beq x0, x0, 10`
+8.  `add x5, x1, x3`
+9.  `add x5, x1, x3`
+10. `add x5, x1, x3`
+11. `add x5, x1, x3`
+12. `add x8, x5, x7`
 
 (rest instructions are no operation instruction)
 

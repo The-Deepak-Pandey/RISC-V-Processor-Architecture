@@ -2,7 +2,7 @@
 `include "modules/components/instruction_memory.v"
 
 module instruction_fetch_stage(
-    input wire clk, 
+    input wire clk,
     input wire rst,
     input wire ALU_zero,
     input wire branch,
